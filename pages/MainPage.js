@@ -40,7 +40,6 @@ export default class MainPage extends Component {
 
   onAddQrHandler = type => {
     if (type === SCAN_QR) {
-      alert('扫描二维码')
       this.props.navigation.navigate('Scan')
     }
 

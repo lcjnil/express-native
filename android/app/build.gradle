@@ -126,7 +126,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-randombytes')
     compile project(':react-native-camera')
     compile project(':realm')
     compile project(':react-native-vector-icons')

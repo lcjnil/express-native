@@ -1,15 +1,12 @@
-const config = {
+module.exports = {
   database: {
     host: 'localhost',
     database: 'express',
     port: 27017
   },
   key: {
-    privateKey: 'wp064E9jDtR4fa/U8NWZYvr9AXthh1RviLq47UByvOQ=',
-    publicKey: 'BJzmrDj06hXNvt6sHCT1CP+ve1FBIdhDLtay2GqMRIhc0J7MTci+iUE7Bu5A/69SnKBj9+2KoHnNxE4nyupTkQw=',
-    ephemPrivateKey: Buffer('lqplqiCLkAwEvJjNMxEmLyd1uonkfGAVcOJuGlzjTjc=', 'base64'),
-    iv: Buffer('VHyNJpIliCI+Y13Q9y73qQ==', 'base64')
+    privateKey: 'wplSK11hyZsDIoPzR4qwwdS5CJsOY57hw9tzGHXUGX0=',
+    publicKey: 'zG/m9vCoqT0X8bWdjj7dctG9pJDt87xTgeIGMXYxvRSE/Ebm+Ef2cNc0hsMqy1jPdy90MOAuG5AlzO92Qc19yg==',
+    iv: 'VHyNJpIliCI+Y13Q9y73qQ==',
   }
 }
-
-export default config
