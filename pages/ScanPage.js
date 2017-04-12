@@ -28,8 +28,9 @@ export default class ScanPage extends Component {
     // 解密过程非常慢，所以需要放到下一个 tick，否则会阻塞渲染
     setTimeout(() => {
       if (type === 'QR_CODE') {
-        alert(JSON.stringify(decryptAll(data)))
-        this.props.navigation.goBack()
+        const expressData = decryptAll(data)
+        // this.props.navigation.goBack()
+        this.props.navigation.navigate('Express', expressData)
       }
     })
   }
