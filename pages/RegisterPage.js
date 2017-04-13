@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {View, StyleSheet, TextInput} from 'react-native'
 import {Toolbar, ListItem, Subheader, Button} from 'react-native-material-ui'
+import config from '../config.json'
 
 export default class RegisterPage extends Component {
   constructor() {
@@ -13,7 +14,7 @@ export default class RegisterPage extends Component {
   }
 
   register = () => {
-    fetch('http://192.168.31.133:3000/register', {
+    fetch(`http://${config.server}/register`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

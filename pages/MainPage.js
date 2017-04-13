@@ -57,9 +57,9 @@ export default class MainPage extends Component {
     const loginUser = users[0]
 
     let availableActions = [...actions]
-    // if (loginUser && loginUser.type !== 'staff') {
-    //   availableActions.pop()
-    // }
+    if (loginUser && loginUser.type !== 'staff') {
+      availableActions.pop()
+    }
 
     return (
       <View style={{flex: 1}}>

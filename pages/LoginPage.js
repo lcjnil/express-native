@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-import { NavigationActions } from 'react-navigation'
 import { MKTextField, MKButton, MKColor } from 'react-native-material-kit'
 import { Button } from 'react-native-material-ui'
 import realm from '../lib/store'
 import {resetScreen} from '../lib/helper'
+import config from '../config.json'
 
 const styles = Object.assign({}, StyleSheet.create({
   textfieldWithFloatingLabel: {
@@ -52,7 +52,7 @@ export default class LoginPage extends Component {
   }
 
   login = () => {
-    fetch('http://192.168.31.133:3000/login', {
+    fetch(`http://${config.server}/login`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

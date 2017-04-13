@@ -3,6 +3,9 @@ import {Text, View, ScrollView, TextInput, StyleSheet} from 'react-native'
 import {Toolbar, ListItem, Subheader, Button} from 'react-native-material-ui'
 import _ from 'lodash'
 
+import realm from '../lib/store'
+import config from '../config.json'
+
 export default class AddFormPage extends Component {
   constructor() {
     super()
@@ -19,6 +22,7 @@ export default class AddFormPage extends Component {
   }
 
   addExpress = () => {
+    const [loginUser] = realm.objects('User')
     const data = JSON.stringify(
       _.pick(this.state, [
         'type', 'weight',
@@ -27,14 +31,18 @@ export default class AddFormPage extends Component {
       ])
     )
 
-    fetch('http://192.168.31.133:3000/api/express', {
+    fetch(`http://${config.server}/api/express`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'X-Access-Token': loginUser.token
       },
       body: data
-    }).then(console.log)
+    }).then(() => {
+      alert('Create Express success!')
+      this.props.navigation.goBack()
+    })
   }
 
   render() {
