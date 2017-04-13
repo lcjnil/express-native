@@ -29,7 +29,6 @@ export default class ScanPage extends Component {
     setTimeout(() => {
       if (type === 'QR_CODE') {
         const expressData = decryptAll(data)
-        // this.props.navigation.goBack()
         this.props.navigation.navigate('Express', expressData)
       }
     })
