@@ -52,7 +52,7 @@ export default class LoginPage extends Component {
   }
 
   login = () => {
-    fetch(`http://${config.server}/login`, {
+    fetch(`http://${config.server}/api/login`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

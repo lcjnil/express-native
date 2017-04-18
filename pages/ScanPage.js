@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import Camera from 'react-native-camera'
 import {decryptAll} from '../lib/Ecc'
+import {resetExpress} from '../lib/helper'
 
 const {height, width} = Dimensions.get('window')
 const WIDTH = 250
@@ -29,7 +30,7 @@ export default class ScanPage extends Component {
     setTimeout(() => {
       if (type === 'QR_CODE') {
         const expressData = decryptAll(data)
-        this.props.navigation.navigate('Express', expressData)
+        this.props.navigation.dispatch(resetExpress(expressData))
       }
     })
   }

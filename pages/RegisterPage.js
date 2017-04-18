@@ -14,7 +14,7 @@ export default class RegisterPage extends Component {
   }
 
   register = () => {
-    fetch(`http://${config.server}/register`, {
+    fetch(`http://${config.server}/api/register`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
