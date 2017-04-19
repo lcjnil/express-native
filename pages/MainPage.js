@@ -13,21 +13,15 @@ const SCAN_QR = 'SCAN_QR'
 const INPUT_ID = 'INPUT_ID'
 const ADD = 'ADD'
 
-const actions = [{
-  icon: 'camera-alt',
-  name: SCAN_QR,
-  label: '扫描二维码'
-}, {
-  icon: 'edit',
-  name: INPUT_ID,
-  label: '手动输入'
-}, {
-  icon: 'note-add',
-  name: ADD,
-  label: '添加新的物流'
-}]
-
 export default class MainPage extends Component {
+  state = {
+    loginUser: null
+  }
+
+  componentWillMount () {
+    this.setState({loginUser: realm.objects('User')[0]})
+  }
+
   onMenuPressHandler = e => {
     if (MENU[e.index] === 'LOGOUT') {
       realm.write(() => {
@@ -48,20 +42,12 @@ export default class MainPage extends Component {
   }
 
   render () {
-    const users = realm.objects('User')
-    const loginUser = users[0]
-
-    let availableActions = [...actions]
-    if (loginUser && loginUser.type !== 'staff') {
-      availableActions.pop()
-    }
-
     return (
       <View style={{flex: 1}}>
         <Toolbar
           centerElement="主页"
           rightElement={{
-            menu: {labels: ['登出']},
+            menu: {labels: [this.state.loginUser ? '登出' : '登录']},
           }}
           onRightElementPress={this.onMenuPressHandler}
         />
@@ -79,11 +65,13 @@ export default class MainPage extends Component {
             </Icon.Button>
           </View>
 
+          {this.state.loginUser && this.state.loginUser.type !== 'user' &&
           <View>
             <Icon.Button name="plus" backgroundColor="#673AB7" size={80} onPress={this.add}>
               <Text style={{fontSize: 50, color: '#fff'}}>新建物流单</Text>
             </Icon.Button>
           </View>
+          }
         </View>
       </View>
     )

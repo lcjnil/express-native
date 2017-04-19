@@ -1,8 +1,22 @@
 import React, {Component} from 'react'
 import {View, Text} from 'react-native'
 import {Toolbar, ListItem, Subheader} from 'react-native-material-ui'
+import realm from '../lib/store'
+import {resetScreen} from '../lib/helper'
 
 export default class ExpressPage extends Component {
+  state = {
+    loginUser: null
+  }
+
+  componentWillMount () {
+    this.setState({loginUser: realm.objects('User')[0]})
+  }
+
+  handleLogin = () => {
+    this.props.navigation.dispatch(resetScreen('Home'))
+  }
+
   render() {
     const {params} = this.props.navigation.state;
     return (
@@ -58,6 +72,12 @@ export default class ExpressPage extends Component {
             centerElement={params.s}
           />,
         ]}
+
+        {!this.state.loginUser &&
+          <Text style={{textAlign: 'center', marginTop: 20}}>
+            查看更多信息，请<Text style={{color: '#03A9F4'}} onPress={this.handleLogin}>登录</Text>
+          </Text>
+        }
       </View>
     )
   }

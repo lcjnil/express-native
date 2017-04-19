@@ -85,6 +85,10 @@ export default class LoginPage extends Component {
     this.props.navigation.navigate('Register')
   }
 
+  visitor = () => {
+    this.props.navigation.dispatch(resetScreen('Main'))
+  }
+
   render () {
     return (
       <View style={{
@@ -128,7 +132,7 @@ export default class LoginPage extends Component {
             flexDirection: 'row'
           }}>
             <Text onPress={this.register}>注册</Text>
-            <Text>游客访问</Text>
+            <Text onPress={this.visitor}>游客访问</Text>
           </View>
         </View>
       </View>
