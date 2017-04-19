@@ -13,6 +13,7 @@ import ScanPage from './pages/ScanPage'
 import AddFormPage from './pages/AddFormPage'
 import RegisterPage from './pages/RegisterPage'
 import ExpressPage from './pages/ExpressPage'
+import SearchPage from './pages/SearchPage'
 
 if (Platform.OS === 'android') {
   UIManager.setLayoutAnimationEnabledExperimental(true)
@@ -32,7 +33,8 @@ const SimpleApp = StackNavigator({
   Scan: {screen: ScanPage},
   AddForm: {screen: AddFormPage},
   Register: {screen: RegisterPage},
-  Express: {screen: ExpressPage}
+  Express: {screen: ExpressPage},
+  Search: {screen: SearchPage}
 }, {
   headerMode: 'none'
 })

@@ -37,6 +37,11 @@ export default class MainPage extends Component {
     this.props.navigation.navigate('Scan')
   }
 
+  search = () => {
+    this.props.navigation.navigate('Search')
+  }
+
+
   add = () => {
     this.props.navigation.navigate('AddForm')
   }
@@ -60,7 +65,7 @@ export default class MainPage extends Component {
           </View>
 
           <View style={{paddingVertical: 10}}>
-            <Icon.Button name="lead-pencil" backgroundColor="#E91E63" size={80}>
+            <Icon.Button name="lead-pencil" backgroundColor="#E91E63" size={80} onPress={this.search}>
               <Text style={{fontSize: 50, color: '#fff'}}>输入物流 ID</Text>
             </Icon.Button>
           </View>
