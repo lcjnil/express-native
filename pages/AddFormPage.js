@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
-import {Text, View, ScrollView, TextInput, StyleSheet} from 'react-native'
+import {Text, View, ScrollView, TextInput, StyleSheet, AsyncStorage} from 'react-native'
 import {Toolbar, ListItem, Subheader, Button} from 'react-native-material-ui'
 import _ from 'lodash'
 
-import realm from '../lib/store'
 import config from '../config.json'
 
 export default class AddFormPage extends Component {
@@ -17,12 +16,23 @@ export default class AddFormPage extends Component {
       receiverAddress: '',
       senderName: '',
       senderPhone: '',
-      senderAddress: ''
+      senderAddress: '',
+      loginUser: {}
     }
   }
 
-  addExpress = () => {
-    const [loginUser] = realm.objects('User')
+  componentDidMount () {
+    AsyncStorage.getItem('loginUser').then(loginUser => {
+      if (loginUser) {
+        this.setState({loginUser})
+      }
+    })
+  }
+
+  addExpress = async () => {
+    const loginUserStr = await AsyncStorage.getItem('loginUser')
+    const loginUser = JSON.parse(loginUserStr)
+
     const data = JSON.stringify(
       _.pick(this.state, [
         'type', 'weight',
@@ -31,7 +41,7 @@ export default class AddFormPage extends Component {
       ])
     )
 
-    fetch(`http://${config.server}/api/express`, {
+    const r = await fetch(`http://${config.server}/api/express`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -39,10 +49,13 @@ export default class AddFormPage extends Component {
         'X-Access-Token': loginUser.token
       },
       body: data
-    }).then(() => {
-      alert('Create Express success!')
-      this.props.navigation.goBack()
     })
+    if (r.ok) {
+      alert('创建物流记录成功！')
+      this.props.navigation.goBack()
+    } else {
+      alert('创建失败')
+    }
   }
 
   render() {

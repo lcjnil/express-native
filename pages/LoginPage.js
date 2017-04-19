@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
-import { MKTextField, MKButton, MKColor } from 'react-native-material-kit'
+import { View, StyleSheet, Text, AsyncStorage } from 'react-native'
+import {TextField} from 'react-native-material-textfield'
 import { Button } from 'react-native-material-ui'
-import realm from '../lib/store'
 import {resetScreen} from '../lib/helper'
 import config from '../config.json'
 
@@ -13,46 +12,23 @@ const styles = Object.assign({}, StyleSheet.create({
   },
 }))
 
-const PasswordInput = MKTextField.textfieldWithFloatingLabel()
-  .withPassword(true)
-  .withPlaceholder('密码')
-  .withHighlightColor(MKColor.Blue)
-  .withStyle(styles.textfieldWithFloatingLabel)
-  .withTextInputStyle({flex: 1})
-  .build()
-
-const PhoneInput = MKTextField.textfieldWithFloatingLabel()
-  .withPlaceholder('电话号码')
-  .withHighlightColor(MKColor.Blue)
-  .withStyle(styles.textfieldWithFloatingLabel)
-  .withTextInputStyle({flex: 1})
-  .build()
-
 export default class LoginPage extends Component {
-  constructor () {
-    super()
-
-    this.state = {
-      phone: '',
-      password: '',
-    }
+  state = {
+    phone: '',
+    password: '',
+    loginUser: {}
   }
 
   componentDidMount () {
-    const users = realm.objects('User')
-    if (users.length > 1) {
-      realm.write(() => {
-        realm.delete(users)
-      })
-    }
-
-    if (users.length === 1) {
-      this.props.navigation.dispatch(resetScreen('Main'))
-    }
+    AsyncStorage.getItem('loginUser').then(loginUser => {
+      if (loginUser) {
+        this.props.navigation.dispatch(resetScreen('Main'))
+      }
+    })
   }
 
-  login = () => {
-    fetch(`http://${config.server}/api/login`, {
+  login = async () => {
+    const r = await fetch(`http://${config.server}/api/login`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -62,23 +38,17 @@ export default class LoginPage extends Component {
         phone: this.state.phone,
         password: this.state.password
       })
-    }).then(r => {
-      if (r.ok) {
-        r.json()
-          .then(user => {
-            this.props.navigation.dispatch(resetScreen('Main'))
-            realm.write(() => {
-              realm.create('User',
-                Object.assign(
-                  user, {token: r.headers.get('x-access-token')}
-                )
-              )
-            })
-          })
-      } else {
-        alert('登录失败，请检查电话号码或密码')
-      }
     })
+
+    if (!r.ok) {
+      alert('登录失败，请检查电话号码或密码')
+      return
+    }
+
+    const user = await r.json()
+    user.token = r.headers.get('X-Access-Token')
+    await AsyncStorage.setItem('loginUser', JSON.stringify(user))
+    this.props.navigation.dispatch(resetScreen('Main'))
   }
 
   register = () => {
@@ -107,18 +77,21 @@ export default class LoginPage extends Component {
           marginLeft: 20,
           marginRight: 20
         }}>
-          <PhoneInput
+          <TextField
+            label="电话号码"
             value={this.state.phone}
-            onTextChange={phone => this.setState({phone})}
+            onChangeText={phone => this.setState({phone}) }
           />
         </View>
         <View style={{
           marginLeft: 20,
           marginRight: 20
         }}>
-          <PasswordInput
+          <TextField
+            label="密码"
             value={this.state.password}
-            onTextChange={password => this.setState({password})}
+            secureTextEntry
+            onChangeText={password => this.setState({password})}
           />
         </View>
         <View style={{

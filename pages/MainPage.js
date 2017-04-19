@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, AsyncStorage } from 'react-native'
 import { Toolbar } from 'react-native-material-ui'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import realm from '../lib/store'
 import { resetScreen } from '../lib/helper'
 
 const MENU = {
@@ -18,18 +17,18 @@ export default class MainPage extends Component {
     loginUser: null
   }
 
-  componentWillMount () {
-    this.setState({loginUser: realm.objects('User')[0]})
+  componentDidMount () {
+    AsyncStorage.getItem('loginUser').then(loginUser => {
+      if (loginUser) {
+        this.setState({loginUser: JSON.parse(loginUser)})
+      }
+    })
   }
 
-  onMenuPressHandler = e => {
+  onMenuPressHandler = async e => {
     if (MENU[e.index] === 'LOGOUT') {
-      realm.write(() => {
-        const users = realm.objects('User')
-        realm.delete(users)
-
-        this.props.navigation.dispatch(resetScreen('Home'))
-      })
+      await AsyncStorage.removeItem('loginUser')
+      this.props.navigation.dispatch(resetScreen('Home'))
     }
   }
 

@@ -1,16 +1,21 @@
 import React, {Component} from 'react'
-import {View, Text} from 'react-native'
+import {View, Text, AsyncStorage} from 'react-native'
 import {Toolbar, ListItem, Subheader} from 'react-native-material-ui'
-import realm from '../lib/store'
 import {resetScreen} from '../lib/helper'
 
 export default class ExpressPage extends Component {
   state = {
-    loginUser: null
+    isLogin: false
   }
 
   componentWillMount () {
-    this.setState({loginUser: realm.objects('User')[0]})
+    AsyncStorage.getItem('loginUser').then(loginUser => {
+      if (loginUser) {
+        this.setState({
+          isLogin: true
+        })
+      }
+    })
   }
 
   handleLogin = () => {
@@ -73,7 +78,7 @@ export default class ExpressPage extends Component {
           />,
         ]}
 
-        {!this.state.loginUser &&
+        {!this.state.isLogin &&
           <Text style={{textAlign: 'center', marginTop: 20}}>
             查看更多信息，请<Text style={{color: '#03A9F4'}} onPress={this.handleLogin}>登录</Text>
           </Text>

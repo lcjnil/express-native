@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, TextInput, StyleSheet } from 'react-native'
+import { Text, View, ScrollView, TextInput, StyleSheet, AsyncStorage } from 'react-native'
 import { Toolbar, ListItem, Subheader, Button } from 'react-native-material-ui'
 
-import realm from '../lib/store'
 import config from '../config.json'
 
 const map = {
@@ -19,10 +18,14 @@ export default class SearchPage extends Component {
   }
 
   componentWillMount () {
-    this.setState({loginUser: realm.objects('User')[0]})
+    AsyncStorage.getItem('loginUser').then(loginUser => {
+      if (loginUser) {
+        this.setState({loginUser: JSON.parse(loginUser)})
+      }
+    })
   }
 
-  searchExpress = () => {
+  searchExpress = async () => {
     const headers = {
       'Accept': 'application/json',
       'Content-Type': 'application/json',

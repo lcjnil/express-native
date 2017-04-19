@@ -26,22 +26,18 @@ export default class ScanPage extends Component {
     this.setState({
       loading: true
     })
-    // 解密过程非常慢，所以需要放到下一个 tick，否则会阻塞渲染
-    setTimeout(() => {
-      if (type === 'QR_CODE') {
-        try {
-          const expressData = decryptAll(data)
-          if (!expressData.id) {
-            alert('二维码有误，请确认后重新扫描')
-            return this.props.navigation.goBack()
-          }
-          this.props.navigation.dispatch(resetExpress(expressData))
-        } catch (e) {
+    decryptAll(data)
+      .then(expressData => {
+        if (!expressData.id) {
           alert('二维码有误，请确认后重新扫描')
           return this.props.navigation.goBack()
         }
-      }
-    })
+        this.props.navigation.dispatch(resetExpress(expressData))
+      })
+      .catch(e => {
+        alert('二维码有误，请确认后重新扫描')
+        return this.props.navigation.goBack()
+      })
   }
 
   render () {
