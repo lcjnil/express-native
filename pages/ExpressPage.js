@@ -182,7 +182,7 @@ export default class ExpressPage extends Component {
           </Text>
         }
         {(params.p || params.s) && this.renderMore()}
-        {this.state.loginUser.type !== 'user' &&
+        {this.state.loginUser.type === 'staff' &&
           <OperatorActions expressId={params.id} />
         }
 
