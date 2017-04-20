@@ -40,7 +40,6 @@ export default class MainPage extends Component {
     this.props.navigation.navigate('Search')
   }
 
-
   add = () => {
     this.props.navigation.navigate('AddForm')
   }
@@ -55,6 +54,8 @@ export default class MainPage extends Component {
           }}
           onRightElementPress={this.onMenuPressHandler}
         />
+
+        <Text style={{paddingLeft: 10, paddingTop: 10}}>你好！{this.state.loginUser ? this.state.loginUser.name : '游客'}</Text>
 
         <View style={{padding: 10}}>
           <View>

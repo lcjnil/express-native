@@ -8,6 +8,7 @@ export default class RegisterPage extends Component {
     super()
     this.state = {
       phone: '',
+      name: '',
       password: '',
       repeatPassword: ''
     }
@@ -22,7 +23,8 @@ export default class RegisterPage extends Component {
       },
       body: JSON.stringify({
         phone: this.state.phone,
-        password: this.state.password
+        password: this.state.password,
+        name: this.state.name
       })
     }).then(r => {
       if (r.ok) {
@@ -57,6 +59,17 @@ export default class RegisterPage extends Component {
               value={this.state.phone}
               onChangeText={phone => this.setState({phone})}
               placeholder="请填写电话号码" />
+          }
+        />
+        <ListItem
+          divider
+          leftElement="person"
+          centerElement={
+            <TextInput
+              {...inputProps}
+              value={this.state.name}
+              onChangeText={name => this.setState({name})}
+              placeholder="请填写姓名" />
           }
         />
         <ListItem
