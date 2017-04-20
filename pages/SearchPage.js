@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, TextInput, StyleSheet, AsyncStorage } from 'react-native'
 import { Toolbar, ListItem, Subheader, Button } from 'react-native-material-ui'
+import moment from 'moment'
 
 import config from '../config.json'
+import OperatorActions from '../components/OperatorActions'
 
-const map = {
-  expressId: ['物流 ID', 'bookmark'],
-  type: ['类型', 'toc'],
-  weight: ['重量', 'link']
+const STATUS_MAP = {
+  initial: '已接单',
+  transfer: '运输中',
+  received: '已送达'
 }
 
 export default class SearchPage extends Component {
@@ -68,6 +70,11 @@ export default class SearchPage extends Component {
           leftElement={<Text>重量</Text>}
           centerElement={express.weight}
         />
+        <ListItem
+          divider
+          leftElement={<Text>状态</Text>}
+          centerElement={STATUS_MAP[express.status]}
+        />
       </View>
     )
   }
@@ -100,7 +107,7 @@ export default class SearchPage extends Component {
     const express = this.state.express
     return (
       <View>
-        <Subheader text="收货人信息" key="1"/>
+        <Subheader text="收货人信息"/>
         <ListItem
           divider
           leftElement={<Text>姓名</Text>}
@@ -122,6 +129,26 @@ export default class SearchPage extends Component {
             leftElement={<Text>密码</Text>}
             centerElement={express.password}
           />}
+      </View>
+    )
+  }
+
+  renderHistory() {
+  const express = this.state.express
+    return (
+      <View>
+        <Subheader text="历史记录"/>
+        {express.history.map((v, index) => (
+          <ListItem
+            divider
+            key={index}
+            leftElement={<Text>运输</Text>}
+            centerElement={{
+              primaryText: `地点: ${v.position}`,
+              secondaryText: `操作人员: ${v.operator.name || '张三'} 时间: ${moment(v.date).format('YYYY-MM-DD')} `,
+            }}
+          />
+        ))}
       </View>
     )
   }
@@ -151,6 +178,11 @@ export default class SearchPage extends Component {
           {this.state.express.expressId && this.renderCommonInfo()}
           {this.state.express.senderPhone && this.renderSenderInfo()}
           {this.state.express.receiverPhone && this.renderReceiverInfo()}
+          {this.state.express.history && this.renderHistory()}
+          {this.state.loginUser && this.state.loginUser.type !== 'user'
+            && this.state.express.expressId &&
+            <OperatorActions expressId={this.state.express.expressId} />
+          }
         </ScrollView>
 
       </View>

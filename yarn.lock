@@ -2570,6 +2570,10 @@ moment@2.x.x:
   version "2.18.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.0.tgz#6cfec6a495eca915d02600a67020ed994937252c"
 
+moment@^2.18.1:
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
+
 morgan@~1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.6.1.tgz#5fd818398c6819cba28a7cd6664f292fe1c0bbf2"
@@ -2991,6 +2995,12 @@ react-native-drawer-layout@~1.1.5:
 react-native-material-design-styles@^0.2.6:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/react-native-material-design-styles/-/react-native-material-design-styles-0.2.6.tgz#2039f638fd11f1e340db7b39ea81ad07f6d81ff0"
+
+react-native-material-dialog@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-material-dialog/-/react-native-material-dialog-0.3.0.tgz#ae78d03fd9b0eb44bdfdc7f88c6d9fde8503cdcc"
+  dependencies:
+    react-native-vector-icons "^4.0.0"
 
 react-native-material-textfield@^0.2.6:
   version "0.2.6"
