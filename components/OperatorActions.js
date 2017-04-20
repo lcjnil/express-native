@@ -37,7 +37,7 @@ export default class OperatorActions extends Component {
       position: this.state.position
     })
 
-    const r = await fetch(`http://${config.server}/api/express/${this.props.expressId}/history`, {
+    const r = await fetch(`${config.server}/api/express/${this.props.expressId}/history`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

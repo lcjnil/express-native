@@ -36,7 +36,7 @@ export default class SearchPage extends Component {
     if (this.state.loginUser && this.state.loginUser.token) {
       headers['X-Access-Token'] = this.state.loginUser.token
     }
-    fetch(`http://${config.server}/api/express/${encodeURIComponent(this.state.expressId)}`, {
+    fetch(`${config.server}/api/express/${encodeURIComponent(this.state.expressId)}`, {
       method: 'GET',
       headers,
     }).then(r => {

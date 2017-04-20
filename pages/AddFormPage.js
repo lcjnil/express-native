@@ -41,7 +41,7 @@ export default class AddFormPage extends Component {
       ])
     )
 
-    const r = await fetch(`http://${config.server}/api/express`, {
+    const r = await fetch(`${config.server}/api/express`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

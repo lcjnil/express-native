@@ -12,7 +12,7 @@ const config = {
     publicKey: 'zG/m9vCoqT0X8bWdjj7dctG9pJDt87xTgeIGMXYxvRSE/Ebm+Ef2cNc0hsMqy1jPdy90MOAuG5AlzO92Qc19yg==',
     iv: 'VHyNJpIliCI+Y13Q9y73qQ==',
   },
-  server: process.env.LOCAL ? `${localIp}:3000` : 'express.lcj.me'
+  server: process.env.LOCAL ? `http://${localIp}:3000` : 'https://express.lcj.me'
 }
 
 writeFile.sync('./config.json', JSON.stringify(config, null, 2))

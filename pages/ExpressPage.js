@@ -45,7 +45,7 @@ export default class ExpressPage extends Component {
     if (this.state.loginUser && this.state.loginUser.token) {
       headers['X-Access-Token'] = this.state.loginUser.token
     }
-    fetch(`http://${config.server}/api/express/${params.id}`, {
+    fetch(`${config.server}/api/express/${params.id}`, {
       method: 'GET',
       headers,
     }).then(r => {

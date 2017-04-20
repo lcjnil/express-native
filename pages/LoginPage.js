@@ -28,7 +28,7 @@ export default class LoginPage extends Component {
   }
 
   login = async () => {
-    const r = await fetch(`http://${config.server}/api/login`, {
+    const r = await fetch(`${config.server}/api/login`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

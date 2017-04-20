@@ -15,7 +15,7 @@ export default class RegisterPage extends Component {
   }
 
   register = () => {
-    fetch(`http://${config.server}/api/register`, {
+    fetch(`${config.server}/api/register`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -31,7 +31,7 @@ export default class RegisterPage extends Component {
         alert('注册成功，请登录')
         this.props.navigation.goBack()
       } else {
-        alert('登录失败，请检查电话号码或密码')
+        alert('注册失败，请检查电话号码或密码')
       }
     })
   }
